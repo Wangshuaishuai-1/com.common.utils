@@ -14,9 +14,9 @@ import java.util.HashMap;
  */
 public class Jsonutils {
 
-    private static final ObjectMapper mapper = new ObjectMapper();
-    private static final ObjectReader objectReader = mapper.reader();
-    private static final ObjectWriter objectWriter=mapper.writer();
+    private static final ObjectMapper MAPPER = new ObjectMapper();
+    private static final ObjectReader OBJECT_READER = MAPPER.reader();
+    private static final ObjectWriter OBJECT_WRITER =MAPPER.writer();
 
     /**
      * json：对象转化为字符串
@@ -25,7 +25,7 @@ public class Jsonutils {
      * @throws JsonProcessingException
      */
     public static String toString(Object object) throws JsonProcessingException {
-        return objectWriter.writeValueAsString(object);
+        return OBJECT_WRITER.writeValueAsString(object);
     }
 
     /**
@@ -37,7 +37,7 @@ public class Jsonutils {
      * @throws JsonProcessingException
      */
     public static <T> T parseToObject(String content, Class<T> valueType) throws IOException {
-        return objectReader.readValue(content, valueType);
+        return OBJECT_READER.readValue(content, valueType);
     }
 
     /**
@@ -46,10 +46,9 @@ public class Jsonutils {
      * @return
      * @throws JsonProcessingException
      */
-    public static HashMap<String, String> parseToMap(Object object) throws IOException {
-        String content = objectWriter.writeValueAsString(object);
-        HashMap result = objectReader.readValue(content, HashMap.class);
-        return result;
+    public static HashMap parseToMap(Object object) throws IOException {
+        String content = OBJECT_WRITER.writeValueAsString(object);
+        return OBJECT_READER.readValue(content, HashMap.class);
     }
 
     /**
@@ -60,7 +59,7 @@ public class Jsonutils {
      * @return
      */
     public static <T> T parseMapToObject(HashMap content, Class<T> toValueType) {
-        return mapper.convertValue(content, toValueType);
+        return MAPPER.convertValue(content, toValueType);
     }
 
     /**
@@ -70,7 +69,7 @@ public class Jsonutils {
      * @throws JsonProcessingException
      */
     public static JsonNode parseToJsonNode(String content) throws JsonProcessingException {
-        return objectReader.readTree(content);
+        return OBJECT_READER.readTree(content);
     }
 
     /**
@@ -80,7 +79,7 @@ public class Jsonutils {
      * @throws JsonProcessingException
      */
     public static JsonNode parseToJsonNode(Object object) {
-        return mapper.convertValue(object,JsonNode.class);
+        return MAPPER.convertValue(object,JsonNode.class);
     }
 
 }
