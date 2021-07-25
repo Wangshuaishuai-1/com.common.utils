@@ -1,8 +1,12 @@
 package com.common.utils.json;
 
 import com.fasterxml.jackson.core.JsonProcessingException;
+import com.fasterxml.jackson.databind.JsonNode;
 import com.fasterxml.jackson.databind.ObjectMapper;
+import com.fasterxml.jackson.databind.ObjectReader;
+import com.fasterxml.jackson.databind.ObjectWriter;
 
+import java.io.IOException;
 import java.util.HashMap;
 
 /**
@@ -11,6 +15,8 @@ import java.util.HashMap;
 public class Jsonutils {
 
     private static final ObjectMapper mapper = new ObjectMapper();
+    private static final ObjectReader objectReader = mapper.reader();
+    private static final ObjectWriter objectWriter=mapper.writer();
 
     /**
      * json：对象转化为字符串
@@ -19,7 +25,7 @@ public class Jsonutils {
      * @throws JsonProcessingException
      */
     public static String toString(Object object) throws JsonProcessingException {
-        return mapper.writeValueAsString(object);
+        return objectWriter.writeValueAsString(object);
     }
 
     /**
@@ -30,8 +36,8 @@ public class Jsonutils {
      * @return
      * @throws JsonProcessingException
      */
-    public static <T> T parseToObject(String content, Class<T> valueType) throws JsonProcessingException {
-        return mapper.readValue(content, valueType);
+    public static <T> T parseToObject(String content, Class<T> valueType) throws IOException {
+        return objectReader.readValue(content, valueType);
     }
 
     /**
@@ -40,9 +46,9 @@ public class Jsonutils {
      * @return
      * @throws JsonProcessingException
      */
-    public static HashMap<String, String> parseToMap(Object object) throws JsonProcessingException {
-        String content = mapper.writeValueAsString(object);
-        HashMap result = mapper.readValue(content, HashMap.class);
+    public static HashMap<String, String> parseToMap(Object object) throws IOException {
+        String content = objectWriter.writeValueAsString(object);
+        HashMap result = objectReader.readValue(content, HashMap.class);
         return result;
     }
 
@@ -55,6 +61,26 @@ public class Jsonutils {
      */
     public static <T> T parseMapToObject(HashMap content, Class<T> toValueType) {
         return mapper.convertValue(content, toValueType);
+    }
+
+    /**
+     * json：将字符串转化为JsonNode
+     * @param content
+     * @return
+     * @throws JsonProcessingException
+     */
+    public static JsonNode parseToJsonNode(String content) throws JsonProcessingException {
+        return objectReader.readTree(content);
+    }
+
+    /**
+     * json：将对象转化为JsonNode
+     * @param object
+     * @return
+     * @throws JsonProcessingException
+     */
+    public static JsonNode parseToJsonNode(Object object) {
+        return mapper.convertValue(object,JsonNode.class);
     }
 
 }
