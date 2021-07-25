@@ -1,12 +1,10 @@
 package com.common.utils.json;
 
 import com.fasterxml.jackson.core.JsonProcessingException;
-import com.fasterxml.jackson.databind.JsonNode;
-import com.fasterxml.jackson.databind.ObjectMapper;
-import com.fasterxml.jackson.databind.ObjectReader;
-import com.fasterxml.jackson.databind.ObjectWriter;
+import com.fasterxml.jackson.databind.*;
 
 import java.io.IOException;
+import java.text.SimpleDateFormat;
 import java.util.HashMap;
 
 /**
@@ -17,6 +15,10 @@ public class Jsonutils {
     private static final ObjectMapper MAPPER = new ObjectMapper();
     private static final ObjectReader OBJECT_READER = MAPPER.reader();
     private static final ObjectWriter OBJECT_WRITER =MAPPER.writer();
+
+    {
+        MAPPER.getSerializationConfig().with(new SimpleDateFormat("yyyy-MM-dd hh:mm:ss"));
+    }
 
     /**
      * json：对象转化为字符串
