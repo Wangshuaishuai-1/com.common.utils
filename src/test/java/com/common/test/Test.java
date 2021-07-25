@@ -16,7 +16,7 @@ public class Test {
         HashMap<Object,Object> map3=new HashMap<>();
         map1.put("a","d");
         List<HashMap<Object,Object>> list = Arrays.asList(map1,map);
-        HashMap map2 = MapUtils.connectMap(list);
+        HashMap map2 = MapUtils.confluenceMap(list);
         System.out.println(map2.toString());
 
     }

@@ -14,7 +14,7 @@ public class MapUtils {
      *
      * @param mapList
      */
-    public static HashMap connectMap(List<HashMap<Object, Object>> mapList) {
+    public static HashMap confluenceMap(List<HashMap<Object, Object>> mapList) {
         AtomicInteger size = new AtomicInteger(1);
         while (size.get() < mapList.size()) {
             HashMap<Object, Object> mapOne = mapList.get(size.get() - 1);
