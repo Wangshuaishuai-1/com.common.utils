@@ -28,7 +28,7 @@ public class GlobalRuntimeException extends RuntimeException {
     }
 
     public GlobalRuntimeException(String code, String message) {
-        super("status：" + code + "\n" + "message:" + message);
+        super("status：" + code + ", message:" + message);
         this.code = code;
         this.message = message;
     }
