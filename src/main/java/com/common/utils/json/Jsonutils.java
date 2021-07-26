@@ -1,5 +1,7 @@
 package com.common.utils.json;
 
+import com.common.utils.exception.GlobalRuntimeException;
+import com.common.utils.exception.ResponseErrorCode;
 import com.fasterxml.jackson.core.JsonProcessingException;
 import com.fasterxml.jackson.databind.*;
 
@@ -24,10 +26,13 @@ public class Jsonutils {
      * json：对象转化为字符串
      * @param object
      * @return
-     * @throws JsonProcessingException
      */
-    public static String toString(Object object) throws JsonProcessingException {
-        return OBJECT_WRITER.writeValueAsString(object);
+    public static String toString(Object object){
+        try {
+            return OBJECT_WRITER.writeValueAsString(object);
+        } catch (JsonProcessingException e) {
+            throw new GlobalRuntimeException(ResponseErrorCode.JSON_ERROR.getCode(),ResponseErrorCode.JSON_ERROR.getMessage());
+        }
     }
 
     /**
@@ -36,10 +41,13 @@ public class Jsonutils {
      * @param valueType
      * @param <T>
      * @return
-     * @throws JsonProcessingException
      */
-    public static <T> T parseToObject(String content, Class<T> valueType) throws IOException {
-        return OBJECT_READER.readValue(content, valueType);
+    public static <T> T parseToObject(String content, Class<T> valueType){
+        try {
+            return OBJECT_READER.readValue(content, valueType);
+        } catch (IOException e) {
+            throw new GlobalRuntimeException(ResponseErrorCode.JSON_ERROR.getCode(),ResponseErrorCode.JSON_ERROR.getMessage());
+        }
     }
 
     /**
@@ -48,9 +56,13 @@ public class Jsonutils {
      * @return
      * @throws JsonProcessingException
      */
-    public static HashMap parseToMap(Object object) throws IOException {
-        String content = OBJECT_WRITER.writeValueAsString(object);
-        return OBJECT_READER.readValue(content, HashMap.class);
+    public static HashMap parseToMap(Object object){
+        try {
+            String content = OBJECT_WRITER.writeValueAsString(object);
+            return OBJECT_READER.readValue(content, HashMap.class);
+        } catch (IOException e) {
+           throw new GlobalRuntimeException(ResponseErrorCode.JSON_ERROR.getCode(),ResponseErrorCode.JSON_ERROR.getMessage());
+        }
     }
 
     /**
@@ -70,8 +82,12 @@ public class Jsonutils {
      * @return
      * @throws JsonProcessingException
      */
-    public static JsonNode parseToJsonNode(String content) throws JsonProcessingException {
-        return OBJECT_READER.readTree(content);
+    public static JsonNode parseToJsonNode(String content){
+        try {
+            return OBJECT_READER.readTree(content);
+        } catch (JsonProcessingException e) {
+            throw new GlobalRuntimeException(ResponseErrorCode.JSON_ERROR.getCode(),ResponseErrorCode.JSON_ERROR.getMessage());
+        }
     }
 
     /**

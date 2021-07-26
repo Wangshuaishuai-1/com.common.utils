@@ -1,5 +1,6 @@
 package com.common.test;
 
+import com.common.utils.exception.GlobalRuntimeException;
 import com.common.utils.map.MapUtils;
 
 import java.util.Arrays;
@@ -18,6 +19,7 @@ public class Test {
         List<HashMap<Object,Object>> list = Arrays.asList(map1,map);
         HashMap map2 = MapUtils.confluenceMap(list);
         System.out.println(map2.toString());
+        throw new GlobalRuntimeException("100","错误的操作");
 
     }
 }
